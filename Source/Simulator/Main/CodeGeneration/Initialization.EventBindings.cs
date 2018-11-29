@@ -23,7 +23,19 @@ namespace Outracks.Simulator.CodeGeneration
 		{
 			foreach (var e in _self.EventsWithHandler)
 			{
-				yield return HookEvent(e);
+				Statement ret = null;
+
+				try
+				{
+					ret = HookEvent(e);
+				}
+				catch (Exception ex)
+				{
+					Console.Error.WriteLine("WARNING: " + ex.Message);
+					continue;
+				}
+
+				yield return ret;
 			}
 		}
 
