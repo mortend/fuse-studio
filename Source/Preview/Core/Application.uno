@@ -121,14 +121,15 @@ namespace Outracks.Simulator.Client
 					e, this );
 			}
 			
-			Children.Add(new Panel()
-			{
-				Children =
-				{
-					(Node)(overlay ?? ((Panel)Children[0]).Children[0]),
-					fakeApp,
-				},
-			});
+			var p = new Panel();
+
+			if (overlay != null)
+				p.Children.Add((Node)overlay);
+			else if (Children.Count > 0 && ((Panel)Children[0]).Children.Count > 0)
+				p.Children.Add((Node)((Panel)Children[0]).Children[0]);
+
+			p.Children.Add(fakeApp);
+			Children.Add(p);
 		}
 
 
